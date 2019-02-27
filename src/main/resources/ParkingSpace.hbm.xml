@@ -1,0 +1,28 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ParkingSpace" table="ParkingSpace">
+
+        <meta attribute="class-description">
+            This class contains Parking Space.
+        </meta>
+
+        <id name="id" type="int" column="ParkingSpaceId">
+            <generator class="native"/>
+        </id>
+
+        <property name="status" column="isFree" type="boolean"/>
+        <property name="size" column="Parking" type="int"/>
+        <many-to-one name="ParkingRow" class="Models.ParkingRow" column="ParkingRowId" not-null="true"/>
+
+        <list name="parkingSpaceList">
+            <key column="ParkingSpaceId"/>
+            <list-index column="idx"/>
+            <one-to-many class="ParkingSpace"/>
+        </list>
+
+    </class>
+</hibernate-mapping>
