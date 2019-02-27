@@ -12,14 +12,15 @@ public class ParkingRow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false, name = "id")
-    private Long id;
-
+    @Column(nullable = false, name = "ParkingRowId")
+    private Long parkingRowId;
+    @Column(name = "isFree")
     private Boolean status;
 
     @ManyToOne
     @NotNull
-    private Level level; // a moze samo level id
+    @JoinColumn(name = "parkingLevelId")
+    private Level level;
 
     @OneToMany(mappedBy = "parkingRow", targetEntity = ParkingSpace.class)
     private List<ParkingSpace> parkingSpaceList;
@@ -28,12 +29,12 @@ public class ParkingRow {
     }
 
     public ParkingRow(Long id, Boolean status) {
-        this.id = id;
+        this.parkingRowId = id;
         this.status = status;
     }
 
     public Long getId() {
-        return id;
+        return parkingRowId;
     }
 
     public Boolean getStatus() {
@@ -44,15 +45,19 @@ public class ParkingRow {
         this.status = status;
     }
 
-//    public List<ParkingSpace> getParkingSpaceList() {
-//        return parkingSpaceList;
-//    }
-//
-//    public Level getLevel() {
-//        return level;
-//    }
-//
-//    public void setParkingSpaceList(List<ParkingSpace> parkingSpaceList) {
-//        this.parkingSpaceList = parkingSpaceList;
-//    }
+    public List<ParkingSpace> getParkingSpaceList() {
+        return parkingSpaceList;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setParkingSpaceList(List<ParkingSpace> parkingSpaceList) {
+        this.parkingSpaceList = parkingSpaceList;
+    }
 }

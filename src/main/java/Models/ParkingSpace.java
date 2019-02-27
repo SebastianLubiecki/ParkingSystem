@@ -6,9 +6,10 @@ import javax.persistence.*;
 public class ParkingSpace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false, name = "id")
-    private Long id;
+    @Column(nullable = false,  name = "ParkingSpaceId")
+    private Long parkingSpaceId;
     private VehicleSize size;
+    @Column(name = "isFree")
     private boolean status;
 
     @ManyToOne
@@ -20,7 +21,7 @@ public class ParkingSpace {
     }
 
     public Long getId() {
-        return id;
+        return parkingSpaceId;
     }
 
     public VehicleSize getSize() {
@@ -39,13 +40,13 @@ public class ParkingSpace {
         this.status = status;
     }
 
-//    public ParkingRow getParkingRow() {
-//        return parkingRow;
-//    }
-//
-//    public void setParkingRow(ParkingRow parkingRow) {
-//        this.parkingRow = parkingRow;
-//    }
+    public ParkingRow getParkingRow() {
+        return parkingRow;
+    }
+
+    public void setParkingRow(ParkingRow parkingRow) {
+        this.parkingRow = parkingRow;
+    }
 
 
 }

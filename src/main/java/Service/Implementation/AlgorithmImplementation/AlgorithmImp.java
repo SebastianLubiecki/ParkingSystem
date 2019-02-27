@@ -5,7 +5,7 @@ import Connection.Implementation.SessionUtil;
 import Models.Level;
 import Models.ParkingRow;
 import Models.ParkingSpace;
-import Service.Algorithm;
+import Service.Interfaces.Algorithm;
 import org.hibernate.query.Query;
 
 import java.util.List;
