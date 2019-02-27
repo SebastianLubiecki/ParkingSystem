@@ -10,12 +10,15 @@ public class Level {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (nullable = false, name = "parkingLevelId")
     private Long parkingLevelId;
+    @Column(name = "size")
     private int size;
     @Column(name = "isFree")
     private boolean status;
 
-  @OneToMany(mappedBy = "level", targetEntity = ParkingRow.class)
-  @JoinColumn(name = "parkingLevelId", insertable = false, updatable = false)
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinTable( name="parkingRows", joinColumns = {
+          @JoinColumn( name = "ParkingLevelId") },
+          inverseJoinColumns = @JoinColumn( name = "ParkingLevelId"))
     private List<ParkingRow> parkingRowList;
 
     public Level() {

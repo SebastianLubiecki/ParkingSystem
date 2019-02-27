@@ -111,7 +111,7 @@ public class Main {
         parkingSpacesInRow22.add(parkingSpace223);
         parkingRow22.setParkingSpaceList(parkingSpacesInRow22);
 
-        parkingRow11.setLevel(level1);
+
         level1.setSize(6);
         level2.setSize(6);
 

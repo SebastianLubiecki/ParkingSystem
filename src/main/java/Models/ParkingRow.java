@@ -17,10 +17,6 @@ public class ParkingRow {
     @Column(name = "isFree")
     private Boolean status;
 
-    @ManyToOne
-    @NotNull
-    @JoinColumn(name = "parkingLevelId")
-    private Level level;
 
     @OneToMany(mappedBy = "parkingRow", targetEntity = ParkingSpace.class)
     private List<ParkingSpace> parkingSpaceList;
@@ -47,14 +43,6 @@ public class ParkingRow {
 
     public List<ParkingSpace> getParkingSpaceList() {
         return parkingSpaceList;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
-    public Level getLevel() {
-        return level;
     }
 
     public void setParkingSpaceList(List<ParkingSpace> parkingSpaceList) {
