@@ -55,12 +55,5 @@ public class Level {
         this.parkingRowList = parkingRowList;
     }
 
-    @Override
-    public String toString() {
-        return "Level{" +
-                "parkingLevelId=" + parkingLevelId +
-                ", size=" + size +
-                ", status="+status+
-                '}';
-    }
+
 }

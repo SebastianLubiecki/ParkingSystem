@@ -16,6 +16,9 @@ public class ParkingSpace {
     @Column(name = "isFree")
     private boolean status;
 
+    @ManyToOne
+    private ParkingRow parkingRow;
+
     public ParkingRow getParkingRow() {
         return parkingRow;
     }
@@ -24,8 +27,6 @@ public class ParkingSpace {
         this.parkingRow = parkingRow;
     }
 
-    @ManyToOne
-    ParkingRow parkingRow;
 
     public ParkingSpace() {
     }

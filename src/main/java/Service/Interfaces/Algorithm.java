@@ -10,8 +10,13 @@ public interface Algorithm {
 
     ParkingSpace getFreeParkingSpace();
     List getListOfLevels();
-    List getListOfRowInFollowingLevel (Level level);
-    List getFreeSpaceInFollowingRow (ParkingRow parkingRow);
+    List getListOfRow( );
+    List getParkingSpace ( );
+     Level getFirstFreeLevel ();
+
+     ParkingRow getFirstFreeParkingRow (Level level);
+
+     ParkingSpace getFirstFreeParkingSpace (ParkingRow parkingRow);
 
 
 

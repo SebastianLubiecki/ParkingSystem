@@ -22,13 +22,10 @@ public class Main {
       //  dateBase();
 
         Algorithm algorithm = new AlgorithmImp();
-        try (Session session = SessionUtil.getSession()) {
-            Transaction transaction = session.beginTransaction();
-            //  List list=  algorithm.getListOfLevels();
-            algorithm.getFreeParkingSpace();
-            transaction.commit();
-
-         }
+       ParkingRow parkingRow = algorithm.getFirstFreeParkingRow(algorithm.getFirstFreeLevel());
+        System.out.println(parkingRow);
+        ParkingSpace parkingSpace = algorithm.getFirstFreeParkingSpace(parkingRow);
+        System.out.println(parkingSpace);
     }
 
     public static void dateBase() {

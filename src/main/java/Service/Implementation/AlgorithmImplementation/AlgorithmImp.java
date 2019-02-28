@@ -16,36 +16,26 @@ public class AlgorithmImp implements Algorithm {
 
     @Override
     public ParkingSpace getFreeParkingSpace() {// method to change to few smaller method
-        //declaration
-        List<Level> levelList = getListOfLevels();
-        List<ParkingSpace> parkingFreeSpace = null;
 
+//        //Search for free row in founded level
+//        int RowIndex = 0;
+//        List<ParkingRow> parkingRowList = getListOfRowInFollowingLevel(levelList.get(levelIndex));
+//        while (parkingRowList.get(RowIndex).getStatus() && RowIndex<parkingRowList.size()) {
+//            System.out.println(parkingRowList.get(RowIndex).getStatus());
+//            RowIndex++;
+//        }
+//        //Search for free parking space
+//        int SpaceIndex = 0;
+//        List<ParkingSpace> parkingSpaces = getListOfSPacesInFollowingRow(parkingRowList.get(RowIndex));
+//        while (parkingSpaces.get(SpaceIndex).isFree()) {
+//            System.out.println(parkingFreeSpace.get(SpaceIndex).isFree());
+//            SpaceIndex++;
+//
+//        }
+//        System.out.println("Number of free space" + parkingFreeSpace.get(SpaceIndex));
+//        return parkingFreeSpace.get(SpaceIndex);
 
-
-        //Search for free level
-        int levelIndex = 0;
-        while (levelList.get(levelIndex).equals(true)) {
-            System.out.println(levelList.get(levelIndex));
-            levelIndex++;
-        }
-
-        //Search for free row in founded level
-        int RowIndex = 0;
-        List<ParkingRow> parkingRowList = getListOfRowInFollowingLevel(levelList.get(levelIndex));
-        while (parkingRowList.get(RowIndex).equals(true)) {
-            System.out.println(parkingRowList.get(RowIndex).getStatus());
-            RowIndex++;
-        }
-        //Search for free parking space
-        int SpaceIndex = 0;
-        List<ParkingSpace> parkingSpaces = getFreeSpaceInFollowingRow(parkingRowList.get(RowIndex));
-        while (parkingSpaces.get(SpaceIndex).equals(true)) {
-            System.out.println(parkingFreeSpace.get(SpaceIndex).isFree());
-            SpaceIndex++;
-
-        }
-        System.out.println("Number of free space" + parkingFreeSpace.get(SpaceIndex));
-        return parkingFreeSpace.get(SpaceIndex);
+        return null;
     }
 
     @Override
@@ -58,36 +48,62 @@ public class AlgorithmImp implements Algorithm {
     }
 
     @Override
-    public List getListOfRowInFollowingLevel(Level level) {
+    public List getListOfRow() {
         try (Session session = SessionUtil.getSession()) {
-            String hql = "From ParkingRow AS PR where PR.level =:"+level.getId();
-            System.out.println("HQL in row:"+hql);
+            String hql = "From ParkingRow";
             Query<ParkingRow> query = session.createQuery(hql, ParkingRow.class);
-         //   query.setParameter("status", level);
             return query.getResultList();
-
         }
     }
 
     @Override
-    public List getFreeSpaceInFollowingRow(ParkingRow parkingRow) {
+    public List getParkingSpace() {
         try (Session session = SessionUtil.getSession()) {
-            String hql = "From ParkingSpace where ParkingRow.ParkingRowId = :ParkingRowId " + parkingRow.getId();
-
+            String hql = "From ParkingSpace";
             Query<ParkingSpace> query = session.createQuery(hql, ParkingSpace.class);
-            query.setParameter("ParkingRowId", parkingRow.getId());
             return query.getResultList();
         }
     }
 
+
+    @Override
+    public Level getFirstFreeLevel() {
+        List<Level> levelList = getListOfLevels();
+        int levelIndex = 0;
+        while (levelList.get(levelIndex).equals(true)) {
+            System.out.println(levelList.get(levelIndex));
+            levelIndex++;
+        }
+        return levelList.get(levelIndex);
+    }
+
+    @Override
+    public ParkingRow getFirstFreeParkingRow(Level level) {
+        List<ParkingRow> parkingListOfAllRow = getListOfRow();
+
+        int rowIndex = 0;
+        while (parkingListOfAllRow.get(rowIndex).equals(true)) {
+            System.out.println(parkingListOfAllRow.get(rowIndex));
+            rowIndex++;
+        }
+        return parkingListOfAllRow.get(rowIndex);
+    }
+
+    @Override
+    public ParkingSpace getFirstFreeParkingSpace(ParkingRow parkingRow) {
+        List<ParkingSpace> listOfAllParkingSpace = getParkingSpace();
+
+        int spaceIndex = 0;
+        while (listOfAllParkingSpace.get(spaceIndex).isFree()) {
+            System.out.println(listOfAllParkingSpace.get(spaceIndex));
+            spaceIndex++;
+        }
+        return listOfAllParkingSpace.get(spaceIndex);
+    }
+
+
     public static void main(String[] args) {
         Algorithm algorithm = new AlgorithmImp();
-        Level level = new Level();
-        level.setParkingLevelId(2L);
-        List list = algorithm.getListOfRowInFollowingLevel(level);
 
-        for (Object o : list) {
-            System.out.println(o);
-        }
     }
 }
