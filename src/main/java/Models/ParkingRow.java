@@ -2,6 +2,7 @@ package Models;
 
 
 import com.sun.istack.internal.NotNull;
+import net.bytebuddy.implementation.bind.annotation.Default;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,11 +15,13 @@ public class ParkingRow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "ParkingRowId")
     private Long parkingRowId;
-    @Column(name = "isFree")
-    private Boolean status;
+    @Column(name = "isFree", columnDefinition = "Boolean default true")
+       private Boolean status;
 
+    @ManyToOne
+    private Level level;
 
-    @OneToMany(mappedBy = "parkingRow", targetEntity = ParkingSpace.class)
+    @OneToMany(mappedBy = "parkingRow", cascade = CascadeType.ALL)
     private List<ParkingSpace> parkingSpaceList;
 
     public ParkingRow() {
@@ -27,6 +30,14 @@ public class ParkingRow {
     public ParkingRow(Long id, Boolean status) {
         this.parkingRowId = id;
         this.status = status;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     public Long getId() {
