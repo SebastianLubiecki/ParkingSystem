@@ -1,15 +1,16 @@
-package Service.Main;
+package Service;
 
 
 import Connection.Implementation.SessionUtil;
 import Models.Level;
 import Models.ParkingRow;
 import Models.ParkingSpace;
-import Models.VehicleSize;
-import Service.Implementation.AlgorithmImplementation.AlgorithmImp;
-import Service.Implementation.ParkingImplementation.ParkingImp;
-import Service.Interfaces.Algorithm;
-import Service.Interfaces.Parking;
+import Service.Implementation.LevelImplementation;
+import Service.Implementation.ParkingRowImpl;
+import Service.Implementation.ParkingSpaceImpl;
+import Service.Interfaces.LevelsOperation;
+import Service.Interfaces.RowsOperation;
+import Service.Interfaces.SpaceOperation;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -19,24 +20,42 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-      //  dateBase();
+        // dateBase();
 
-        Algorithm algorithm = new AlgorithmImp();
-       ParkingRow parkingRow = algorithm.getFirstFreeParkingRow(algorithm.getFirstFreeLevel());
-        System.out.println(parkingRow);
-        ParkingSpace parkingSpace = algorithm.getFirstFreeParkingSpace(parkingRow);
-        System.out.println(parkingSpace);
+        LevelsOperation levelsOperation = new LevelImplementation();
+        RowsOperation rowsOperation = new ParkingRowImpl();
+        SpaceOperation spaceOperation = new ParkingSpaceImpl();
+        Level level = levelsOperation.getFirstFreeLevel();
+        List<ParkingRow> parkingRows = rowsOperation.getListOfRowInFollowingLevel(level); //level.getParkingRowList();
+
+        System.out.println("Parking list size " + level.getParkingRowList().size());
+        for (int i = 0; i < parkingRows.size(); i++) {
+            System.out.println("number " + i + " of rows, equals: " + parkingRows.get(i));
+        }
+        ParkingRow parkingRow = rowsOperation.getFirstFreeRowInFollowingLevel(level);
+        System.out.println("Fist free parking row is " + parkingRow);
+
+        List<ParkingSpace> parkingSpaceList = parkingRow.getParkingSpaceList();
+        for (int i = 0; i < parkingSpaceList.size(); i++) {
+            System.out.println("Number" + i + " of parking row, is space: " + parkingSpaceList.get(i));
+        }
+
+        System.out.println();
+        ParkingSpace parkingSpace = spaceOperation.getFirstFreeSpaceInFollowingRow(parkingRow);
+        System.out.println("First free space is " + parkingSpace);
+
+
     }
 
-    public static void dateBase() {
-        Parking parking = new ParkingImp();
+    private static void dateBase() {
+
 
         Level level1 = new Level();
         Level level2 = new Level();
 
         ParkingRow parkingRow11 = new ParkingRow();
         parkingRow11.setLevel(level1);
-        parkingRow11.setStatus(true);
+        parkingRow11.setStatus(false);
         ParkingRow parkingRow12 = new ParkingRow();
         parkingRow12.setLevel(level1);
         parkingRow12.setStatus(true);
@@ -48,40 +67,32 @@ public class Main {
         parkingRow22.setStatus(true);
 
         ParkingSpace parkingSpace111 = new ParkingSpace();
-        parkingSpace111.setSize(VehicleSize.CAR);
+        parkingSpace111.setStatus(false);
         parkingSpace111.setParkingRow(parkingRow11);
         ParkingSpace parkingSpace112 = new ParkingSpace();
-        parkingSpace112.setSize(VehicleSize.CAR);
+        parkingSpace112.setStatus(false);
         parkingSpace112.setParkingRow(parkingRow11);
         ParkingSpace parkingSpace113 = new ParkingSpace();
-        parkingSpace113.setSize(VehicleSize.CAR);
         parkingSpace113.setParkingRow(parkingRow11);
         ParkingSpace parkingSpace121 = new ParkingSpace();
-        parkingSpace121.setSize(VehicleSize.CAR);
         parkingSpace121.setParkingRow(parkingRow12);
+        parkingSpace121.setStatus(false);
         ParkingSpace parkingSpace122 = new ParkingSpace();
-        parkingSpace122.setSize(VehicleSize.CAR);
+        parkingSpace122.setStatus(true);
         parkingSpace122.setParkingRow(parkingRow12);
         ParkingSpace parkingSpace123 = new ParkingSpace();
-        parkingSpace123.setSize(VehicleSize.CAR);
         parkingSpace123.setParkingRow(parkingRow12);
         ParkingSpace parkingSpace211 = new ParkingSpace();
-        parkingSpace211.setSize(VehicleSize.CAR);
         parkingSpace211.setParkingRow(parkingRow21);
         ParkingSpace parkingSpace212 = new ParkingSpace();
-        parkingSpace212.setSize(VehicleSize.CAR);
         parkingSpace212.setParkingRow(parkingRow21);
         ParkingSpace parkingSpace213 = new ParkingSpace();
-        parkingSpace213.setSize(VehicleSize.CAR);
         parkingSpace213.setParkingRow(parkingRow21);
         ParkingSpace parkingSpace221 = new ParkingSpace();
-        parkingSpace221.setSize(VehicleSize.CAR);
         parkingSpace221.setParkingRow(parkingRow22);
         ParkingSpace parkingSpace222 = new ParkingSpace();
-        parkingSpace222.setSize(VehicleSize.CAR);
         parkingSpace222.setParkingRow(parkingRow22);
         ParkingSpace parkingSpace223 = new ParkingSpace();
-        parkingSpace223.setSize(VehicleSize.CAR);
         parkingSpace223.setParkingRow(parkingRow22);
 
         List<ParkingRow> parkingRowsAtLevel1 = new ArrayList<>();
@@ -131,7 +142,7 @@ public class Main {
 
             session.save(level1);
             session.save(level2);
-            System.out.println(parkingRow11.getStatus());
+
 
             session.save(parkingRow11);
             session.save(parkingRow12);

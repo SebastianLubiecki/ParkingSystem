@@ -1,10 +1,15 @@
 package Models;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "parkinglevels")
+@Proxy(lazy = false)
 public class Level {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +23,7 @@ public class Level {
     private boolean status;
 
     @OneToMany(mappedBy = "level", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
     private List<ParkingRow> parkingRowList;
 
     public Level() {
@@ -55,5 +61,12 @@ public class Level {
         this.parkingRowList = parkingRowList;
     }
 
-
+    @Override
+    public String toString() {
+        return "Level{" +
+                "parkingLevelId=" + parkingLevelId +
+                ", size=" + size +
+                ", status=" + status +
+                '}';
+    }
 }

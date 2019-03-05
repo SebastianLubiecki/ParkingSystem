@@ -3,12 +3,16 @@ package Models;
 
 import com.sun.istack.internal.NotNull;
 import net.bytebuddy.implementation.bind.annotation.Default;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "parkingrows")
+@Proxy(lazy = false)
 public class ParkingRow {
 
     @Id
@@ -22,6 +26,7 @@ public class ParkingRow {
     private Level level;
 
     @OneToMany(mappedBy = "parkingRow", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
     private List<ParkingSpace> parkingSpaceList;
 
     public ParkingRow() {
@@ -58,5 +63,14 @@ public class ParkingRow {
 
     public void setParkingSpaceList(List<ParkingSpace> parkingSpaceList) {
         this.parkingSpaceList = parkingSpaceList;
+    }
+
+    @Override
+    public String toString() {
+        return "ParkingRow{" +
+                "parkingRowId=" + parkingRowId +
+                ", status=" + status +
+                ", level=" + level +
+                '}';
     }
 }

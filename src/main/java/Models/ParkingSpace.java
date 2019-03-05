@@ -1,22 +1,23 @@
 package Models;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "parkingSpace")
+@Proxy(lazy = false)
 public class ParkingSpace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "ParkingSpaceId")
     private Long parkingSpaceId;
 
-    @Column(name = "size")
-    private VehicleSize size;
-
     @Column(name = "isFree")
     private boolean status;
 
     @ManyToOne
+
     private ParkingRow parkingRow;
 
     public ParkingRow getParkingRow() {
@@ -35,14 +36,6 @@ public class ParkingSpace {
         return parkingSpaceId;
     }
 
-    public VehicleSize getSize() {
-        return size;
-    }
-
-    public void setSize(VehicleSize size) {
-        this.size = size;
-    }
-
     public boolean isFree() {
         return status;
     }
@@ -51,4 +44,12 @@ public class ParkingSpace {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "ParkingSpace{" +
+                "parkingSpaceId=" + parkingSpaceId +
+                ", status=" + status +
+                ", parkingRow=" + parkingRow +
+                '}';
+    }
 }
