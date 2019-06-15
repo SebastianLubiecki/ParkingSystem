@@ -32,7 +32,7 @@ public class LevelImplementation implements LevelsOperation {
         }
         if (numberOfLevel > listOfALlLevel.size()) {
             System.out.println("There is not free level!");
-            // doklepac reszte kodu
+
         }
         return listOfALlLevel.get(numberOfLevel);
     }
@@ -42,7 +42,7 @@ public class LevelImplementation implements LevelsOperation {
         try (Session session = SessionUtil.getSession()) {
             Transaction transaction = session.beginTransaction();
 
-      //      level = session.get(Level.class, level.getId()); //maybe useless...
+
             if (level.isStatus()) {
                 level.setStatus(false);
             }

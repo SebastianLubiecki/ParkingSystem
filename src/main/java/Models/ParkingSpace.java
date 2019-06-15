@@ -17,7 +17,6 @@ public class ParkingSpace {
     private boolean status;
 
     @ManyToOne
-
     private ParkingRow parkingRow;
 
     public ParkingRow getParkingRow() {

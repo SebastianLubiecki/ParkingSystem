@@ -5,6 +5,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import java.lang.annotation.Documented;
 import java.util.List;
 
 @Entity

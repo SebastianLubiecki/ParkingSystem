@@ -1,8 +1,6 @@
 package Models;
 
 
-import com.sun.istack.internal.NotNull;
-import net.bytebuddy.implementation.bind.annotation.Default;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
@@ -20,7 +18,7 @@ public class ParkingRow {
     @Column(nullable = false, name = "ParkingRowId")
     private Long parkingRowId;
     @Column(name = "isFree", columnDefinition = "Boolean default true")
-       private Boolean status;
+    private Boolean status;
 
     @ManyToOne
     private Level level;

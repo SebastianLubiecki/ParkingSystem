@@ -20,7 +20,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        // dateBase();
+        dateBase();
 
         LevelsOperation levelsOperation = new LevelImplementation();
         RowsOperation rowsOperation = new ParkingRowImpl();
@@ -47,6 +47,8 @@ public class Main {
 
     }
 
+
+    //Simulating database for h2
     private static void dateBase() {
 
 
