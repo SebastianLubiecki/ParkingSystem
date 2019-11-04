@@ -1,8 +1,8 @@
 package Service.Implementation;
 
 import Connection.Implementation.SessionUtil;
-import Models.Level;
-import Models.ParkingRow;
+import Models.LevelEntity;
+import Models.ParkingRowEntity;
 import Service.Interfaces.RowsOperation;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,54 +13,54 @@ import java.util.stream.Collectors;
 
 public class ParkingRowImpl implements RowsOperation {
     @Override
-    public List<ParkingRow> getListOfAllRows() {
+    public List<ParkingRowEntity> getListOfAllRows() {
         try (Session session = SessionUtil.getSession()) {
-            String hql = "FROM ParkingRow as PR";
-            Query<ParkingRow> query = session.createQuery(hql, ParkingRow.class);
+            String hql = "FROM ParkingRowEntity as PR";
+            Query<ParkingRowEntity> query = session.createQuery(hql, ParkingRowEntity.class);
             return query.getResultList();
         }
     }
 
     @Override
-    public List<ParkingRow> getListOfRowInFollowingLevel(Level level) {
+    public List<ParkingRowEntity> getListOfRowInFollowingLevel(LevelEntity levelEntity) {
         RowsOperation rowsOperation = new ParkingRowImpl();
-        List<ParkingRow> parkingRowList = rowsOperation.getListOfAllRows();
-        List<ParkingRow> parkingRowsInFollowingLevel = parkingRowList.stream()
-                .filter(parkingRow -> parkingRow.getLevel().getId().equals(level.getId()))
+        List<ParkingRowEntity> parkingRowEntityList = rowsOperation.getListOfAllRows();
+        List<ParkingRowEntity> parkingRowsInFollowingLevelEntity = parkingRowEntityList.stream()
+                .filter(parkingRow -> parkingRow.getLevelEntity().getId().equals(levelEntity.getId()))
                 .collect(Collectors.toList());
-        return parkingRowsInFollowingLevel;
+        return parkingRowsInFollowingLevelEntity;
     }
 
     @Override
-    public ParkingRow getFirstFreeRowInFollowingLevel(Level level) {
+    public ParkingRowEntity getFirstFreeRowInFollowingLevel(LevelEntity levelEntity) {
         RowsOperation rowsOperation = new ParkingRowImpl();
-        List<ParkingRow> parkingRowsInFollowingLevel = rowsOperation.getListOfRowInFollowingLevel(level);
+        List<ParkingRowEntity> parkingRowsInFollowingLevelEntity = rowsOperation.getListOfRowInFollowingLevel(levelEntity);
 
-        int indexOfLevel = parkingRowsInFollowingLevel.size() + 1;
-        for (int i = 0; i < parkingRowsInFollowingLevel.size(); i++) {
-            if (parkingRowsInFollowingLevel.get(i).getStatus()) {
+        int indexOfLevel = parkingRowsInFollowingLevelEntity.size() + 1;
+        for (int i = 0; i < parkingRowsInFollowingLevelEntity.size(); i++) {
+            if (parkingRowsInFollowingLevelEntity.get(i).getStatus()) {
                 indexOfLevel = i;
             }
         }
-        if (indexOfLevel > parkingRowsInFollowingLevel.size()) {
-            System.out.println("There is no free row in this level, you got mistake in your implementation of level status.");
+        if (indexOfLevel > parkingRowsInFollowingLevelEntity.size()) {
+            System.out.println("There is no free row in this levelEntity, you got mistake in your implementation of levelEntity status.");
             // rzuc wyjatkiem ale paczkiem nie wiem... Wymysl cos chOpie!
         }
-        return parkingRowsInFollowingLevel.get(indexOfLevel);
+        return parkingRowsInFollowingLevelEntity.get(indexOfLevel);
     }
 
     @Override
-    public void changeStatusOfTheRow(ParkingRow parkingRow) {
+    public void changeStatusOfTheRow(ParkingRowEntity parkingRowEntity) {
 
-        if (parkingRow.getStatus()) {
-            parkingRow.setStatus(false);
+        if (parkingRowEntity.getStatus()) {
+            parkingRowEntity.setStatus(false);
         }
-        if (!parkingRow.getStatus()) {
-            parkingRow.setStatus(true);
+        if (!parkingRowEntity.getStatus()) {
+            parkingRowEntity.setStatus(true);
         }
         try (Session session = SessionUtil.getSession()) {
             Transaction transaction = session.beginTransaction();
-            session.save(parkingRow);
+            session.save(parkingRowEntity);
             transaction.commit();
         }
     }

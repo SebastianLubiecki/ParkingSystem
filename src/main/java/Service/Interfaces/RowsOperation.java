@@ -1,17 +1,17 @@
 package Service.Interfaces;
 
-import Models.Level;
-import Models.ParkingRow;
+import Models.LevelEntity;
+import Models.ParkingRowEntity;
 
 import java.util.List;
 
 public interface RowsOperation {
 
-    List<ParkingRow> getListOfAllRows();
+    List<ParkingRowEntity> getListOfAllRows();
 
-    List<ParkingRow> getListOfRowInFollowingLevel(Level level);
+    List<ParkingRowEntity> getListOfRowInFollowingLevel(LevelEntity levelEntity);
 
-    ParkingRow getFirstFreeRowInFollowingLevel(Level level);
+    ParkingRowEntity getFirstFreeRowInFollowingLevel(LevelEntity levelEntity);
 
-    void changeStatusOfTheRow(ParkingRow parkingRow);
+    void changeStatusOfTheRow(ParkingRowEntity parkingRowEntity);
 }

@@ -16,9 +16,9 @@
 
         <property name="status" column="isFree" type="boolean"/>
         <property name="size" column="Parking" type="int"/>
-        <many-to-one name="ParkingRow" class="Models.ParkingRow" column="ParkingRowId" not-null="true"/>
+        <many-to-one name="ParkingRow" class="Models.ParkingRowEntity" column="ParkingRowId" not-null="true"/>
 
-        <list name="parkingSpaceList">
+        <list name="parkingSpaceEntityList">
             <key column="ParkingSpaceId"/>
             <list-index column="idx"/>
             <one-to-many class="ParkingSpace"/>

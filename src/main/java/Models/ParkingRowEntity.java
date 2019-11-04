@@ -11,36 +11,36 @@ import java.util.List;
 @Entity
 @Table(name = "parkingrows")
 @Proxy(lazy = false)
-public class ParkingRow {
+public class ParkingRowEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, name = "ParkingRowId")
     private Long parkingRowId;
     @Column(name = "isFree", columnDefinition = "Boolean default true")
     private Boolean status;
 
     @ManyToOne
-    private Level level;
+    private LevelEntity levelEntity;
 
     @OneToMany(mappedBy = "parkingRow", cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
-    private List<ParkingSpace> parkingSpaceList;
+    private List<ParkingSpaceEntity> parkingSpaceEntityList;
 
-    public ParkingRow() {
+    public ParkingRowEntity() {
     }
 
-    public ParkingRow(Long id, Boolean status) {
+    public ParkingRowEntity(Long id, Boolean status) {
         this.parkingRowId = id;
         this.status = status;
     }
 
-    public Level getLevel() {
-        return level;
+    public LevelEntity getLevelEntity() {
+        return levelEntity;
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
+    public void setLevelEntity(LevelEntity levelEntity) {
+        this.levelEntity = levelEntity;
     }
 
     public Long getId() {
@@ -55,20 +55,20 @@ public class ParkingRow {
         this.status = status;
     }
 
-    public List<ParkingSpace> getParkingSpaceList() {
-        return parkingSpaceList;
+    public List<ParkingSpaceEntity> getParkingSpaceEntityList() {
+        return parkingSpaceEntityList;
     }
 
-    public void setParkingSpaceList(List<ParkingSpace> parkingSpaceList) {
-        this.parkingSpaceList = parkingSpaceList;
+    public void setParkingSpaceEntityList(List<ParkingSpaceEntity> parkingSpaceEntityList) {
+        this.parkingSpaceEntityList = parkingSpaceEntityList;
     }
 
     @Override
     public String toString() {
-        return "ParkingRow{" +
+        return "ParkingRowEntity{" +
                 "parkingRowId=" + parkingRowId +
                 ", status=" + status +
-                ", level=" + level +
+                ", levelEntity=" + levelEntity +
                 '}';
     }
 }

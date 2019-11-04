@@ -2,9 +2,9 @@ package Service;
 
 
 import Connection.Implementation.SessionUtil;
-import Models.Level;
-import Models.ParkingRow;
-import Models.ParkingSpace;
+import Models.LevelEntity;
+import Models.ParkingRowEntity;
+import Models.ParkingSpaceEntity;
 import Service.Implementation.LevelImplementation;
 import Service.Implementation.ParkingRowImpl;
 import Service.Implementation.ParkingSpaceImpl;
@@ -25,24 +25,24 @@ public class Main {
         LevelsOperation levelsOperation = new LevelImplementation();
         RowsOperation rowsOperation = new ParkingRowImpl();
         SpaceOperation spaceOperation = new ParkingSpaceImpl();
-        Level level = levelsOperation.getFirstFreeLevel();
-        List<ParkingRow> parkingRows = rowsOperation.getListOfRowInFollowingLevel(level); //level.getParkingRowList();
+        LevelEntity levelEntity = levelsOperation.getFirstFreeLevel();
+        List<ParkingRowEntity> parkingRowEntities = rowsOperation.getListOfRowInFollowingLevel(levelEntity); //levelEntity.getParkingRowEntityList();
 
-        System.out.println("Parking list size " + level.getParkingRowList().size());
-        for (int i = 0; i < parkingRows.size(); i++) {
-            System.out.println("number " + i + " of rows, equals: " + parkingRows.get(i));
+        System.out.println("Parking list size " + levelEntity.getParkingRowEntityList().size());
+        for (int i = 0; i < parkingRowEntities.size(); i++) {
+            System.out.println("number " + i + " of rows, equals: " + parkingRowEntities.get(i));
         }
-        ParkingRow parkingRow = rowsOperation.getFirstFreeRowInFollowingLevel(level);
-        System.out.println("Fist free parking row is " + parkingRow);
+        ParkingRowEntity parkingRowEntity = rowsOperation.getFirstFreeRowInFollowingLevel(levelEntity);
+        System.out.println("Fist free parking row is " + parkingRowEntity);
 
-        List<ParkingSpace> parkingSpaceList = parkingRow.getParkingSpaceList();
-        for (int i = 0; i < parkingSpaceList.size(); i++) {
-            System.out.println("Number" + i + " of parking row, is space: " + parkingSpaceList.get(i));
+        List<ParkingSpaceEntity> parkingSpaceEntityList = parkingRowEntity.getParkingSpaceEntityList();
+        for (int i = 0; i < parkingSpaceEntityList.size(); i++) {
+            System.out.println("Number" + i + " of parking row, is space: " + parkingSpaceEntityList.get(i));
         }
 
         System.out.println();
-        ParkingSpace parkingSpace = spaceOperation.getFirstFreeSpaceInFollowingRow(parkingRow);
-        System.out.println("First free space is " + parkingSpace);
+        ParkingSpaceEntity parkingSpaceEntity = spaceOperation.getFirstFreeSpaceInFollowingRow(parkingRowEntity);
+        System.out.println("First free space is " + parkingSpaceEntity);
 
 
     }
@@ -52,116 +52,116 @@ public class Main {
     private static void dateBase() {
 
 
-        Level level1 = new Level();
-        Level level2 = new Level();
+        LevelEntity levelEntity1 = new LevelEntity();
+        LevelEntity levelEntity2 = new LevelEntity();
 
-        ParkingRow parkingRow11 = new ParkingRow();
-        parkingRow11.setLevel(level1);
-        parkingRow11.setStatus(false);
-        ParkingRow parkingRow12 = new ParkingRow();
-        parkingRow12.setLevel(level1);
-        parkingRow12.setStatus(true);
-        ParkingRow parkingRow21 = new ParkingRow();
-        parkingRow21.setLevel(level2);
-        parkingRow21.setStatus(true);
-        ParkingRow parkingRow22 = new ParkingRow();
-        parkingRow22.setLevel(level2);
-        parkingRow22.setStatus(true);
+        ParkingRowEntity parkingRowEntity11 = new ParkingRowEntity();
+        parkingRowEntity11.setLevelEntity(levelEntity1);
+        parkingRowEntity11.setStatus(false);
+        ParkingRowEntity parkingRowEntity12 = new ParkingRowEntity();
+        parkingRowEntity12.setLevelEntity(levelEntity1);
+        parkingRowEntity12.setStatus(true);
+        ParkingRowEntity parkingRowEntity21 = new ParkingRowEntity();
+        parkingRowEntity21.setLevelEntity(levelEntity2);
+        parkingRowEntity21.setStatus(true);
+        ParkingRowEntity parkingRowEntity22 = new ParkingRowEntity();
+        parkingRowEntity22.setLevelEntity(levelEntity2);
+        parkingRowEntity22.setStatus(true);
 
-        ParkingSpace parkingSpace111 = new ParkingSpace();
-        parkingSpace111.setStatus(false);
-        parkingSpace111.setParkingRow(parkingRow11);
-        ParkingSpace parkingSpace112 = new ParkingSpace();
-        parkingSpace112.setStatus(false);
-        parkingSpace112.setParkingRow(parkingRow11);
-        ParkingSpace parkingSpace113 = new ParkingSpace();
-        parkingSpace113.setParkingRow(parkingRow11);
-        ParkingSpace parkingSpace121 = new ParkingSpace();
-        parkingSpace121.setParkingRow(parkingRow12);
-        parkingSpace121.setStatus(false);
-        ParkingSpace parkingSpace122 = new ParkingSpace();
-        parkingSpace122.setStatus(true);
-        parkingSpace122.setParkingRow(parkingRow12);
-        ParkingSpace parkingSpace123 = new ParkingSpace();
-        parkingSpace123.setParkingRow(parkingRow12);
-        ParkingSpace parkingSpace211 = new ParkingSpace();
-        parkingSpace211.setParkingRow(parkingRow21);
-        ParkingSpace parkingSpace212 = new ParkingSpace();
-        parkingSpace212.setParkingRow(parkingRow21);
-        ParkingSpace parkingSpace213 = new ParkingSpace();
-        parkingSpace213.setParkingRow(parkingRow21);
-        ParkingSpace parkingSpace221 = new ParkingSpace();
-        parkingSpace221.setParkingRow(parkingRow22);
-        ParkingSpace parkingSpace222 = new ParkingSpace();
-        parkingSpace222.setParkingRow(parkingRow22);
-        ParkingSpace parkingSpace223 = new ParkingSpace();
-        parkingSpace223.setParkingRow(parkingRow22);
+        ParkingSpaceEntity parkingSpaceEntity111 = new ParkingSpaceEntity();
+        parkingSpaceEntity111.setStatus(false);
+        parkingSpaceEntity111.setParkingRowEntity(parkingRowEntity11);
+        ParkingSpaceEntity parkingSpaceEntity112 = new ParkingSpaceEntity();
+        parkingSpaceEntity112.setStatus(false);
+        parkingSpaceEntity112.setParkingRowEntity(parkingRowEntity11);
+        ParkingSpaceEntity parkingSpaceEntity113 = new ParkingSpaceEntity();
+        parkingSpaceEntity113.setParkingRowEntity(parkingRowEntity11);
+        ParkingSpaceEntity parkingSpaceEntity121 = new ParkingSpaceEntity();
+        parkingSpaceEntity121.setParkingRowEntity(parkingRowEntity12);
+        parkingSpaceEntity121.setStatus(false);
+        ParkingSpaceEntity parkingSpaceEntity122 = new ParkingSpaceEntity();
+        parkingSpaceEntity122.setStatus(true);
+        parkingSpaceEntity122.setParkingRowEntity(parkingRowEntity12);
+        ParkingSpaceEntity parkingSpaceEntity123 = new ParkingSpaceEntity();
+        parkingSpaceEntity123.setParkingRowEntity(parkingRowEntity12);
+        ParkingSpaceEntity parkingSpaceEntity211 = new ParkingSpaceEntity();
+        parkingSpaceEntity211.setParkingRowEntity(parkingRowEntity21);
+        ParkingSpaceEntity parkingSpaceEntity212 = new ParkingSpaceEntity();
+        parkingSpaceEntity212.setParkingRowEntity(parkingRowEntity21);
+        ParkingSpaceEntity parkingSpaceEntity213 = new ParkingSpaceEntity();
+        parkingSpaceEntity213.setParkingRowEntity(parkingRowEntity21);
+        ParkingSpaceEntity parkingSpaceEntity221 = new ParkingSpaceEntity();
+        parkingSpaceEntity221.setParkingRowEntity(parkingRowEntity22);
+        ParkingSpaceEntity parkingSpaceEntity222 = new ParkingSpaceEntity();
+        parkingSpaceEntity222.setParkingRowEntity(parkingRowEntity22);
+        ParkingSpaceEntity parkingSpaceEntity223 = new ParkingSpaceEntity();
+        parkingSpaceEntity223.setParkingRowEntity(parkingRowEntity22);
 
-        List<ParkingRow> parkingRowsAtLevel1 = new ArrayList<>();
-        parkingRowsAtLevel1.add(parkingRow11);
-        parkingRowsAtLevel1.add(parkingRow12);
-        level1.setParkingRowList(parkingRowsAtLevel1);
+        List<ParkingRowEntity> parkingRowsAtLevel1Entity = new ArrayList<>();
+        parkingRowsAtLevel1Entity.add(parkingRowEntity11);
+        parkingRowsAtLevel1Entity.add(parkingRowEntity12);
+        levelEntity1.setParkingRowEntityList(parkingRowsAtLevel1Entity);
 
-        List<ParkingRow> parkingRowsAtLevel2 = new ArrayList<>();
-        parkingRowsAtLevel2.add(parkingRow21);
-        parkingRowsAtLevel2.add(parkingRow22);
-        level2.setParkingRowList(parkingRowsAtLevel2);
+        List<ParkingRowEntity> parkingRowsAtLevel2Entity = new ArrayList<>();
+        parkingRowsAtLevel2Entity.add(parkingRowEntity21);
+        parkingRowsAtLevel2Entity.add(parkingRowEntity22);
+        levelEntity2.setParkingRowEntityList(parkingRowsAtLevel2Entity);
 
-        List<ParkingSpace> parkingSpacesInRow11 = new ArrayList<>();
-        parkingSpacesInRow11.add(parkingSpace111);
-        parkingSpacesInRow11.add(parkingSpace112);
-        parkingSpacesInRow11.add(parkingSpace113);
-        parkingRow11.setParkingSpaceList(parkingSpacesInRow11);
-
-
-        List<ParkingSpace> parkingSpacesInRow12 = new ArrayList<>();
-        parkingSpacesInRow12.add(parkingSpace121);
-        parkingSpacesInRow12.add(parkingSpace122);
-        parkingSpacesInRow12.add(parkingSpace123);
-        parkingRow12.setParkingSpaceList(parkingSpacesInRow12);
-
-        List<ParkingSpace> parkingSpacesInRow21 = new ArrayList<>();
-        parkingSpacesInRow21.add(parkingSpace211);
-        parkingSpacesInRow21.add(parkingSpace212);
-        parkingSpacesInRow21.add(parkingSpace213);
-        parkingRow21.setParkingSpaceList(parkingSpacesInRow21);
-
-        List<ParkingSpace> parkingSpacesInRow22 = new ArrayList<>();
-        parkingSpacesInRow22.add(parkingSpace221);
-        parkingSpacesInRow22.add(parkingSpace222);
-        parkingSpacesInRow22.add(parkingSpace223);
-        parkingRow22.setParkingSpaceList(parkingSpacesInRow22);
+        List<ParkingSpaceEntity> parkingSpacesInRow11Entity = new ArrayList<>();
+        parkingSpacesInRow11Entity.add(parkingSpaceEntity111);
+        parkingSpacesInRow11Entity.add(parkingSpaceEntity112);
+        parkingSpacesInRow11Entity.add(parkingSpaceEntity113);
+        parkingRowEntity11.setParkingSpaceEntityList(parkingSpacesInRow11Entity);
 
 
-        level1.setSize(parkingRowsAtLevel1.size());
-        level1.setStatus(true);
-        level2.setSize(parkingRowsAtLevel2.size());
-        level2.setStatus(true);
+        List<ParkingSpaceEntity> parkingSpacesInRow12Entity = new ArrayList<>();
+        parkingSpacesInRow12Entity.add(parkingSpaceEntity121);
+        parkingSpacesInRow12Entity.add(parkingSpaceEntity122);
+        parkingSpacesInRow12Entity.add(parkingSpaceEntity123);
+        parkingRowEntity12.setParkingSpaceEntityList(parkingSpacesInRow12Entity);
+
+        List<ParkingSpaceEntity> parkingSpacesInRow21Entity = new ArrayList<>();
+        parkingSpacesInRow21Entity.add(parkingSpaceEntity211);
+        parkingSpacesInRow21Entity.add(parkingSpaceEntity212);
+        parkingSpacesInRow21Entity.add(parkingSpaceEntity213);
+        parkingRowEntity21.setParkingSpaceEntityList(parkingSpacesInRow21Entity);
+
+        List<ParkingSpaceEntity> parkingSpacesInRow22Entity = new ArrayList<>();
+        parkingSpacesInRow22Entity.add(parkingSpaceEntity221);
+        parkingSpacesInRow22Entity.add(parkingSpaceEntity222);
+        parkingSpacesInRow22Entity.add(parkingSpaceEntity223);
+        parkingRowEntity22.setParkingSpaceEntityList(parkingSpacesInRow22Entity);
+
+
+        levelEntity1.setSize(parkingRowsAtLevel1Entity.size());
+        levelEntity1.setStatus(true);
+        levelEntity2.setSize(parkingRowsAtLevel2Entity.size());
+        levelEntity2.setStatus(true);
 
 
         try (Session session = SessionUtil.getSession()) {
             Transaction transaction = session.beginTransaction();
 
-            session.save(level1);
-            session.save(level2);
+            session.save(levelEntity1);
+            session.save(levelEntity2);
 
 
-            session.save(parkingRow11);
-            session.save(parkingRow12);
-            session.save(parkingRow21);
-            session.save(parkingRow22);
-            session.save(parkingSpace111);
-            session.save(parkingSpace112);
-            session.save(parkingSpace113);
-            session.save(parkingSpace121);
-            session.save(parkingSpace122);
-            session.save(parkingSpace123);
-            session.save(parkingSpace211);
-            session.save(parkingSpace212);
-            session.save(parkingSpace213);
-            session.save(parkingSpace221);
-            session.save(parkingSpace222);
-            session.save(parkingSpace223);
+            session.save(parkingRowEntity11);
+            session.save(parkingRowEntity12);
+            session.save(parkingRowEntity21);
+            session.save(parkingRowEntity22);
+            session.save(parkingSpaceEntity111);
+            session.save(parkingSpaceEntity112);
+            session.save(parkingSpaceEntity113);
+            session.save(parkingSpaceEntity121);
+            session.save(parkingSpaceEntity122);
+            session.save(parkingSpaceEntity123);
+            session.save(parkingSpaceEntity211);
+            session.save(parkingSpaceEntity212);
+            session.save(parkingSpaceEntity213);
+            session.save(parkingSpaceEntity221);
+            session.save(parkingSpaceEntity222);
+            session.save(parkingSpaceEntity223);
 
             transaction.commit();
             System.out.println("DateBase Comp");

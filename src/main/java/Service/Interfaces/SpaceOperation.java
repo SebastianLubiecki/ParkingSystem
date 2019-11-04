@@ -1,18 +1,18 @@
 package Service.Interfaces;
 
-import Models.ParkingRow;
-import Models.ParkingSpace;
+import Models.ParkingRowEntity;
+import Models.ParkingSpaceEntity;
 
 import java.util.List;
 
 public interface SpaceOperation {
 
-    List<ParkingSpace> getListOfAllSPaces();
+    List<ParkingSpaceEntity> getListOfAllSPaces();
 
-    List<ParkingSpace> getListOfSpacesInFollowingRow(ParkingRow parkingRow);
+    List<ParkingSpaceEntity> getListOfSpacesInFollowingRow(ParkingRowEntity parkingRowEntity);
 
-    ParkingSpace getFirstFreeSpaceInFollowingRow(ParkingRow parkingRow);
+    ParkingSpaceEntity getFirstFreeSpaceInFollowingRow(ParkingRowEntity parkingRowEntity);
 
-    void changeStatusOfTheSpace(ParkingSpace parkingSpace);
+    void changeStatusOfTheSpace(ParkingSpaceEntity parkingSpaceEntity);
 
 }

@@ -1,15 +1,15 @@
 package Service.Interfaces;
 
-import Models.Level;
+import Models.LevelEntity;
 
 import java.util.List;
 
 public interface LevelsOperation {
 
-    List<Level> getListOfAllLevels();
+    List<LevelEntity> getListOfAllLevels();
 
-    Level getFirstFreeLevel();
+    LevelEntity getFirstFreeLevel();
 
-    void changeStatusOfLevel(Level level);
+    void changeStatusOfLevel(LevelEntity levelEntity);
 
 }

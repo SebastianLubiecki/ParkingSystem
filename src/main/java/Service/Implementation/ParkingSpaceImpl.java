@@ -1,8 +1,8 @@
 package Service.Implementation;
 
 import Connection.Implementation.SessionUtil;
-import Models.ParkingRow;
-import Models.ParkingSpace;
+import Models.ParkingRowEntity;
+import Models.ParkingSpaceEntity;
 import Service.Interfaces.SpaceOperation;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,29 +15,29 @@ public class ParkingSpaceImpl implements SpaceOperation {
 
 
     @Override
-    public List<ParkingSpace> getListOfAllSPaces() {
+    public List<ParkingSpaceEntity> getListOfAllSPaces() {
         try (Session session = SessionUtil.getSession()) {
-            String HQL = "FROM ParkingSpace as PS";
-            Query<ParkingSpace> query = session.createQuery(HQL, ParkingSpace.class);
+            String HQL = "FROM ParkingSpaceEntity as PS";
+            Query<ParkingSpaceEntity> query = session.createQuery(HQL, ParkingSpaceEntity.class);
             return query.getResultList();
         }
     }
 
     @Override
-    public List<ParkingSpace> getListOfSpacesInFollowingRow(ParkingRow parkingRow) { // mozna zrobic zapytanie ktore wyszuka tylko te space w bazie danych ktore maja row rowny temu z parametru
+    public List<ParkingSpaceEntity> getListOfSpacesInFollowingRow(ParkingRowEntity parkingRowEntity) { // mozna zrobic zapytanie ktore wyszuka tylko te space w bazie danych ktore maja row rowny temu z parametru
         SpaceOperation spaceOperation = new ParkingSpaceImpl();
-        List<ParkingSpace> listOfAllParkingSpace = spaceOperation.getListOfAllSPaces();
-        List<ParkingSpace> parkingSpaceListInFollowingRow = listOfAllParkingSpace.stream()
-                .filter(parkingSpace -> parkingSpace.getParkingRow().getId().equals(parkingRow.getId()))
+        List<ParkingSpaceEntity> listOfAllParkingSpaceEntity = spaceOperation.getListOfAllSPaces();
+        List<ParkingSpaceEntity> parkingSpaceEntityListInFollowingRow = listOfAllParkingSpaceEntity.stream()
+                .filter(parkingSpaceEntity -> parkingSpaceEntity.getParkingRowEntity().getId().equals(parkingRowEntity.getId()))
                 .collect(Collectors.toList());
 
-        return parkingSpaceListInFollowingRow;
+        return parkingSpaceEntityListInFollowingRow;
     }
 
     @Override
-    public ParkingSpace getFirstFreeSpaceInFollowingRow(ParkingRow parkingRow) {
+    public ParkingSpaceEntity getFirstFreeSpaceInFollowingRow(ParkingRowEntity parkingRowEntity) {
         SpaceOperation spaceOperation = new ParkingSpaceImpl();
-        List<ParkingSpace> spaceListInFollowingRow = spaceOperation.getListOfSpacesInFollowingRow(parkingRow);
+        List<ParkingSpaceEntity> spaceListInFollowingRow = spaceOperation.getListOfSpacesInFollowingRow(parkingRowEntity);
         int index = spaceListInFollowingRow.size() + 1;
         for (int i = 0; i < spaceListInFollowingRow.size(); i++) {
             if (spaceListInFollowingRow.get(i).isFree()) {
@@ -52,16 +52,16 @@ public class ParkingSpaceImpl implements SpaceOperation {
     }
 
     @Override
-    public void changeStatusOfTheSpace(ParkingSpace parkingSpace) {
+    public void changeStatusOfTheSpace(ParkingSpaceEntity parkingSpaceEntity) {
         try (Session session = SessionUtil.getSession()) {
-            if (parkingSpace.isFree()) {
-                parkingSpace.setStatus(false);
+            if (parkingSpaceEntity.isFree()) {
+                parkingSpaceEntity.setStatus(false);
             }
-            if (!parkingSpace.isFree()) {
-                parkingSpace.setStatus(true);
+            if (!parkingSpaceEntity.isFree()) {
+                parkingSpaceEntity.setStatus(true);
             }
             Transaction transaction = session.beginTransaction();
-            session.save(parkingSpace);
+            session.save(parkingSpaceEntity);
             transaction.commit();
         }
     }

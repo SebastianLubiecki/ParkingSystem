@@ -5,15 +5,16 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.lang.annotation.Documented;
 import java.util.List;
+
 
 @Entity
 @Table(name = "parkinglevels")
 @Proxy(lazy = false)
-public class Level {
+public class LevelEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, name = "parkingLevelId")
     private Long parkingLevelId;
 
@@ -25,9 +26,9 @@ public class Level {
 
     @OneToMany(mappedBy = "level", cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
-    private List<ParkingRow> parkingRowList;
+    private List<ParkingRowEntity> parkingRowEntityList;
 
-    public Level() {
+    public LevelEntity() {
     }
 
     public Long getId() {
@@ -54,17 +55,17 @@ public class Level {
         this.status = status;
     }
 
-    public List<ParkingRow> getParkingRowList() {
-        return parkingRowList;
+    public List<ParkingRowEntity> getParkingRowEntityList() {
+        return parkingRowEntityList;
     }
 
-    public void setParkingRowList(List<ParkingRow> parkingRowList) {
-        this.parkingRowList = parkingRowList;
+    public void setParkingRowEntityList(List<ParkingRowEntity> parkingRowEntityList) {
+        this.parkingRowEntityList = parkingRowEntityList;
     }
 
     @Override
     public String toString() {
-        return "Level{" +
+        return "LevelEntity{" +
                 "parkingLevelId=" + parkingLevelId +
                 ", size=" + size +
                 ", status=" + status +

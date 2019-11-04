@@ -7,9 +7,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "parkingSpace")
 @Proxy(lazy = false)
-public class ParkingSpace {
+public class ParkingSpaceEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, name = "ParkingSpaceId")
     private Long parkingSpaceId;
 
@@ -17,18 +17,18 @@ public class ParkingSpace {
     private boolean status;
 
     @ManyToOne
-    private ParkingRow parkingRow;
+    private ParkingRowEntity parkingRowEntity;
 
-    public ParkingRow getParkingRow() {
-        return parkingRow;
+    public ParkingRowEntity getParkingRowEntity() {
+        return parkingRowEntity;
     }
 
-    public void setParkingRow(ParkingRow parkingRow) {
-        this.parkingRow = parkingRow;
+    public void setParkingRowEntity(ParkingRowEntity parkingRowEntity) {
+        this.parkingRowEntity = parkingRowEntity;
     }
 
 
-    public ParkingSpace() {
+    public ParkingSpaceEntity() {
     }
 
     public Long getId() {
@@ -45,10 +45,10 @@ public class ParkingSpace {
 
     @Override
     public String toString() {
-        return "ParkingSpace{" +
+        return "ParkingSpaceEntity{" +
                 "parkingSpaceId=" + parkingSpaceId +
                 ", status=" + status +
-                ", parkingRow=" + parkingRow +
+                ", parkingRowEntity=" + parkingRowEntity +
                 '}';
     }
 }
